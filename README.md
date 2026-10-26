@@ -10,7 +10,7 @@ This project simulates a brute-force credential attack and a subsequent privileg
 - **Target / monitored host:** Windows laptop with SMB enabled on a dedicated test account
 - **SIEM:** Splunk Enterprise (on the Windows host), ingesting the Windows Security event log
 
-![Lab topology](screenshots/01-lab-topology.png)
+![Lab topology](01-lab-topology.png)
 
 ## What I Did
 1. Hardened and configured a Windows host for audit logging of logon events (Event IDs 4624, 4625, 4672)
@@ -18,10 +18,10 @@ This project simulates a brute-force credential attack and a subsequent privileg
 3. Simulated a brute-force attack from Kali Linux against a local test account
 4. Built SPL searches to flag the brute-force threshold and privileged logons, and visualized the failure-to-success pattern on a timeline
 5. Mapped the detected behavior to MITRE ATT&CK techniques
-6. Documented the investigation in a findings report (see [`docs/detection-report.md`](docs/detection-report.md))
+6. Documented the investigation in a findings report (see [`detection-report.md`](detection-report.md))
 
 ## Detection Logic (SPL)
-Full queries in [`splunk/spl-queries.md`](splunk/spl-queries.md). Example — brute-force threshold detection:
+Full queries in [`spl-queries.md`](spl-queries.md). Example — brute-force threshold detection:
 ```spl
 index=win_security_lab sourcetype="WinEventLog:Security" EventCode=4625
 | bucket _time span=5m
@@ -37,7 +37,7 @@ index=win_security_lab sourcetype="WinEventLog:Security" EventCode=4625
 | Logon by a privileged/admin account | 4672 | [T1078.003 – Valid Accounts: Local Accounts](https://attack.mitre.org/techniques/T1078/003/) | Privilege Escalation |
 
 ## Screenshots
-See [`/screenshots`](screenshots) — covering setup, attack, detection and analysis.
+13 screenshots are included in this repo (`01-lab-topology.png` through `13-mitre-mapping.png`), covering setup, attack, detection and analysis.
 
 ## Skills Demonstrated
 Windows Security auditing · Splunk administration & SPL · log correlation & triage · MITRE ATT&CK mapping · incident documentation · Linux (Kali) tooling
